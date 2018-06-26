@@ -25,12 +25,14 @@ defmodule Mix.Tasks.Ct do
     MixErlangTasks.Util.compile_files(Path.wildcard("ctest/**/*_SUITE.erl"), ebin_dir)
 
     logdir = Keyword.get(opts, :log_dir, "ctest/logs")
+    config_path = Keyword.get(opts, :config_path, "./test.config")
     File.mkdir_p!(logdir)
 
     :ct.run_test [
       {:dir, String.to_char_list(ebin_dir)},
       {:logdir, String.to_char_list(logdir)},
-      {:auto_compile, false}
+      {:auto_compile, false},
+      {:config, config_path}
     ]
   end
 end
